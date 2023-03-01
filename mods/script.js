@@ -1,5 +1,4 @@
-$(document).ready(function(){
-
+$(window).on('load', function() {
   // This initializes your cytoscape variable. This is where your graph is saved and what you use to make modifications.
   // The styling for the objects within it are specified in style.json
   // all the elements are saved in elements.json
@@ -12,7 +11,7 @@ $(document).ready(function(){
     },
     elements: fetch('./elements.json').then( res => res.json() )
   });
-     
+
   // Set the default zoom
   cy.zoom(0.5)
 
@@ -67,12 +66,15 @@ $(document).ready(function(){
 
   });
 
-  // Button functions
+
+  /*
+  Button functions
+  */
 
   // Used for figuring out wheather draw mode was previously enabled. 
   var drawModeOn = false;
 
-  $("#draw-on").click(function(){
+  $("#draw-on").on("click", function(){
     if (!drawModeOn){
       eh.enableDrawMode();
       alert("Draw Mode On.");
@@ -93,7 +95,7 @@ $(document).ready(function(){
   Also size of node is dynamic based on the input text length. If the input text length is less than 16 than we only need one line to represent this text. (16 was found through some trail and error :))
   Anything greater than 16 we want to modify the height to fit the node accordingly. We do this by adding in a \n every 16 characters into the string.
   */
-  $("#newN").click(function(){
+  $("#newN").on("click", function(){
     var nodeName = prompt('Enter Node Name');
     if (nodeName.length <= 16){
       var nodeWidth = 200;
@@ -144,7 +146,7 @@ $(document).ready(function(){
   Proceeds to delete if it exists.
   Capitals and spaces matter!
   */
-  $("#removeNode").click(function(){
+  $("#removeNode").on("click", function() {
     var nodeName = prompt('Enter Node Name');
     try{
       // need to get the object associated with this name.
@@ -164,12 +166,12 @@ $(document).ready(function(){
   });
 
   // now remove most recently clicked edge. Uses variable above to know which one was last clicked.
-  $("#removeEdge").click(function() {
+  $("#removeEdge").on("click", function() {
     var removeableEdge = cy.getElementById(edgeToDelete);
     cy.remove(removeableEdge);
   });
 
-  $("#dijkstra").click(function(){
+  $("#dijkstra").on("click", function(){
     var startingNode;
     var endNode;
     do{
@@ -180,7 +182,7 @@ $(document).ready(function(){
     } while( endNode == "" );
   })
 
-  $("#bellManFord").click(function(){
+  $("#bellManFord").on("click", function() {
     var startingNode;
     var endNode;
     do{
@@ -189,6 +191,15 @@ $(document).ready(function(){
     do{
       endNode = prompt("Enter End Node.");
     } while( endNode == "" );
+  })
+
+  $("#clear-canvas").on("click", function(){
+    var looper = cy.json();  
+    var i;
+    for(i in looper.elements.nodes){
+      var elementName = looper.elements.nodes[i].data.id;
+      cy.remove(elementName);
+    }
   })
 });
 

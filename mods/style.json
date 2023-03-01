@@ -19,7 +19,7 @@
         "width": 3,
         "line-color": "#ccc",
         "target-arrow-color": "#ccc",
-        "target-arrow-shape": "triangle",
+        "target-arrow-shape": "none",
         "curve-style": "bezier",
         "label": "data(label)",
         "target-endpoint": "outside-to-node-or-label"
