@@ -1,0 +1,29 @@
+[      
+    { 
+        "data": { "id": "A"},
+        "position": { 
+            "x": 0,
+            "y": 550
+        },
+        "locked": false,
+        "group": "nodes"
+    },
+    { 
+        "data": { "id": "B"},
+        "position": { 
+            "x": 250,
+            "y": 550
+        },
+        "locked": false,
+        "group": "nodes"
+    },
+    { 
+        "data": { "id": "C"},
+        "position": { 
+            "x": 500,
+            "y": 550
+        },
+        "locked": false,
+        "group": "nodes"
+    }
+]

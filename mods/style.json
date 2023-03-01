@@ -1,0 +1,81 @@
+[ 
+    {
+      "selector": "node",
+      "style": {
+        "background-color": "LightSkyBlue",
+        "label": "data(id)",
+        "text-wrap": "wrap",
+        "shape": "round-rectangle",
+        "width": "200",
+        "height": "45",
+        "text-valign": "center",
+        "text-halign": "center",
+        "font-size": "19"
+      }
+    },
+    {
+      "selector": "edge",
+      "style": {
+        "width": 3,
+        "line-color": "#ccc",
+        "target-arrow-color": "#ccc",
+        "target-arrow-shape": "triangle",
+        "curve-style": "bezier",
+        "label": "data(label)",
+        "target-endpoint": "outside-to-node-or-label"
+      }
+    },
+    {
+      "selector": ":parent",
+      "style": {
+        "text-valign": "top",
+        "text-halign": "center",
+        "background-color": "Gainsboro"
+      }
+    },
+    {
+      "selector": ".eh-handle",
+      "style": {
+        "background-color": "red",
+        "width": 12,
+        "height": 12,
+        "shape": "ellipse",
+        "overlay-opacity": 0,
+        "border-width": 12, 
+        "border-opacity": 0
+      }
+    },
+
+    {
+      "selector": ".eh-hover",
+      "style": {
+        "background-color": "red"
+      }
+    },
+
+    {
+      "selector": ".eh-source",
+      "style": {
+        "border-width": 2,
+        "border-color": "red"
+      }
+    },
+
+    {
+      "selector": ".eh-target",
+      "style": {
+        "border-width": 2,
+        "border-color": "red"
+      }
+    },
+
+    {
+      "selector": ".eh-preview, .eh-ghost-edge",
+      "style": {
+        "background-color": "red",
+        "line-color": "red",
+        "target-arrow-color": "red",
+        "source-arrow-color": "red"
+      }
+    }
+  ]

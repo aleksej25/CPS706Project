@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="./style.css">
+  <div class="header">
+    <h1 class="title">CPS706 Routing Visualizer</h1>
+    <button id = "newN" class="button-8">Create New Node</button>
+      <button id = "removeNode" class="button-8">Delete Node</button>
+      <button id = "removeEdge" class="button-8">Delete Tapped Edge</button>
+      <button id = "draw-on" class="button-8">Draw Mode On</button>
+      <button id = "dijkstra" class="button-8">Visualize Dijkstra</button>
+      <button id = "bellmanFord" class="button-8">Visualize BellMan-Ford</button>
+
+  </div>
+  
+  <body>
+
+    <div id="cy"> 
+      <script src="cytoscape.js"></script>
+
+      <!---<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.js"></script>
+      <script src="../node_modules/cytoscape-edgehandles/cytoscape-edgehandles.js"></script>
+      <script src="../node_modules/cytoscape-sbgn-stylesheet/build/bundle.js"></script>
+      <script src="https://unpkg.com/whatwg-fetch@2.0.3/fetch.js"></script>
+      <script src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script> 
+      <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+      <script type = "module" src="script.js"></script>
+    </div> 
+  </body>
+</html>
