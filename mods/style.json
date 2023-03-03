@@ -21,7 +21,7 @@
         "target-arrow-color": "#ccc",
         "target-arrow-shape": "none",
         "curve-style": "bezier",
-        "label": "data(label)",
+        "label": "data(weight)",
         "target-endpoint": "outside-to-node-or-label"
       }
     },

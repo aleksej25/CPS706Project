@@ -61,9 +61,7 @@ $(window).on('load', function() {
       }
       cy.getElementById(k)._private.data.label = edgeWeight;
       cy.getElementById(k).select();
-      
     }
-
   });
 
 
@@ -171,7 +169,7 @@ $(window).on('load', function() {
     cy.remove(removeableEdge);
   });
 
-  $("#dijkstra").on("click", function(){
+  $("#dijkstra").on("click", function(){ 
     var startingNode;
     var endNode;
     do{
@@ -180,6 +178,10 @@ $(window).on('load', function() {
     do{
       endNode = prompt("Enter End Node.");
     } while( endNode == "" );
+    var nodesMap = makeKeyValue(startingNode);
+    var unvisitedArray = makeUnvisitedArray();
+    console.log(unvisitedArray);
+
   })
 
   $("#bellManFord").on("click", function() {
@@ -201,5 +203,41 @@ $(window).on('load', function() {
       cy.remove(elementName);
     }
   })
+
+
+  /*
+  Helper Functions
+  */
+
+  /*
+  This function returns a key value pair for the graph to be traversed. Key will be the name of the node, the value will be its distance to the start.
+  */
+  function makeKeyValue(startingNode){
+    var looper = cy.json();  
+    var nodesMap = {[startingNode]: 0};
+    var i;
+    for(i in looper.elements.nodes){
+      var elementName = '#' + looper.elements.nodes[i].data.id;
+      var edges = cy.$(elementName).connectedEdges();
+      for(let j = 0; j < edges.length; j++){
+        var sourceNode = edges[j]._private.data.source;
+        if ((!(sourceNode in nodesMap)) && (sourceNode != startingNode)){
+          nodesMap[sourceNode] = Number.MAX_SAFE_INTEGER;
+        }
+      }
+    }
+    return nodesMap;
+  }
+
+  function makeUnvisitedArray(){
+    var looper = cy.json();  
+    var unvisitedArray = [];
+    var i;
+    for(i in looper.elements.nodes){
+      var elementName = looper.elements.nodes[i].data.id;
+      unvisitedArray.push(elementName);
+    }
+    return unvisitedArray;
+  }
 });
 

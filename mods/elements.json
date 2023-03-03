@@ -72,47 +72,47 @@
         "group": "nodes"
     },
     {
-        "data": { "id": "AB", "source": "A", "target": "B", "label": "3"},
+        "data": { "id": "AB", "source": "A", "target": "B", "weight": 3},
         "group": "edges"
     },
     {
-        "data": { "id": "AC", "source": "A", "target": "C", "label": "7"},
+        "data": { "id": "AC", "source": "A", "target": "C", "weight": 7},
         "group": "edges"
     },
     {
-        "data": { "id": "BE", "source": "B", "target": "E", "label": "2"},
+        "data": { "id": "BE", "source": "B", "target": "E", "weight": 2},
         "group": "edges"
     },
     {
-        "data": { "id": "BD", "source": "B", "target": "D", "label": "4"},
+        "data": { "id": "BD", "source": "B", "target": "D", "weight": 4},
         "group": "edges"
     },
     {
-        "data": { "id": "ED", "source": "E", "target": "D", "label": "5"},
+        "data": { "id": "ED", "source": "E", "target": "D", "weight": 5},
         "group": "edges"
     },
     {
-        "data": { "id": "DF", "source": "D", "target": "F", "label": "9"},
+        "data": { "id": "DF", "source": "D", "target": "F", "weight": 9},
         "group": "edges"
     },
     {
-        "data": { "id": "CF", "source": "C", "target": "F", "label": "1"},
+        "data": { "id": "CF", "source": "C", "target": "F", "weight": 1},
         "group": "edges"
     },
     {
-        "data": { "id": "EG", "source": "E", "target": "G", "label": "11"},
+        "data": { "id": "EG", "source": "E", "target": "G", "weight": 11},
         "group": "edges"
     },
     {
-        "data": { "id": "FH", "source": "F", "target": "H", "label": "6"},
+        "data": { "id": "FH", "source": "F", "target": "H", "weight": 6},
         "group": "edges"
     },
     {
-        "data": { "id": "GH", "source": "G", "target": "H", "label": "4"},
+        "data": { "id": "GH", "source": "G", "target": "H", "weight": 4},
         "group": "edges"
     },
     {
-        "data": { "id": "DH", "source": "D", "target": "H", "label": "2"},
+        "data": { "id": "DH", "source": "D", "target": "H", "weight": 2},
         "group": "edges"
     }
 ]
