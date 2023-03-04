@@ -59,7 +59,7 @@ $(window).on('load', function() {
       for (let e of iter) {
         k = e[0];
       }
-      cy.getElementById(k)._private.data.label = edgeWeight;
+      cy.getElementById(k)._private.data.weight = parseInt(edgeWeight);
       cy.getElementById(k).select();
     }
   });
@@ -83,7 +83,7 @@ $(window).on('load', function() {
       eh.disableDrawMode();
       alert("Draw Mode Off.");
       drawModeOn = false;
-      document.querySelector('#draw-on').textContent = 'Draw Mode On';
+      document.querySelector('#draw-on').textContent = 'Draw Edges';
     }
   });
 
@@ -179,9 +179,20 @@ $(window).on('load', function() {
       endNode = prompt("Enter End Node.");
     } while( endNode == "" );
     var nodesMap = makeKeyValue(startingNode);
-    var unvisitedArray = makeUnvisitedArray();
-    console.log(unvisitedArray);
+    var unvisitedNodes = makeUnvisitedArray();
+    var visitedNodes = [];
+    // Below makes sure that the first element we will be looping from is our starting node.
+    unvisitedNodes.splice(unvisitedNodes.indexOf(startingNode), 1);
+    unvisitedNodes.splice(0, 0, startingNode);
+    // algo implamented below
+    unvisitedNodes.forEach(function (item, index) {
+      //var neighbouringEdges = getNeighbouringEdges(item);
+      console.log(getNeighbouringEdges(item));
+    });
+    
 
+    //console.log(unvisitedNodes);
+    //console.log(nodesMap);
   })
 
   $("#bellManFord").on("click", function() {
@@ -238,6 +249,14 @@ $(window).on('load', function() {
       unvisitedArray.push(elementName);
     }
     return unvisitedArray;
+  }
+
+  function getNeighbouringEdges(nodeName){
+    var edges = cy.$(elementName).connectedEdges();
+    for(let j = 0; j < edges.length; j++){
+      var targetNode = edges[j]._private.data.target;
+      var weight = edges[j]._private.data.weight;
+    }
   }
 });
 
