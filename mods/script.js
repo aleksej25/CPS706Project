@@ -187,12 +187,8 @@ $(window).on('load', function() {
     // algo implamented below
     unvisitedNodes.forEach(function (item, index) {
       //var neighbouringEdges = getNeighbouringEdges(item);
-      console.log(getNeighbouringEdges(item));
+      console.log(item+ ' ',getNeighbouringEdges('#' + item));
     });
-    
-
-    //console.log(unvisitedNodes);
-    //console.log(nodesMap);
   })
 
   $("#bellManFord").on("click", function() {
@@ -252,11 +248,17 @@ $(window).on('load', function() {
   }
 
   function getNeighbouringEdges(nodeName){
-    var edges = cy.$(elementName).connectedEdges();
+    var connectedMap = {};
+    var edges = cy.$(nodeName).connectedEdges();
     for(let j = 0; j < edges.length; j++){
       var targetNode = edges[j]._private.data.target;
+      if(nodeName == '#' + targetNode){
+        var targetNode = edges[j]._private.data.source;
+      }
       var weight = edges[j]._private.data.weight;
+      connectedMap[targetNode] = weight;
     }
+    return connectedMap;
   }
 });
 
