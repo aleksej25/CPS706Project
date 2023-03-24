@@ -196,7 +196,6 @@ $(window).on('load', function() {
     unvisitedNodes.splice(0, 0, startingNode);
     // algo implamented below
     unvisitedNodes.forEach(function (item, index) {
-      //var neighbouringEdges = getNeighbouringEdges(item);
       console.log(item+ ' ',getNeighbouringEdges('#' + item));
     });
   })
@@ -210,6 +209,22 @@ $(window).on('load', function() {
     do{
       endNode = prompt("Enter End Node.");
     } while( endNode == "" );
+    var nodesMap = makeKeyValue(startingNode);
+    var unvisitedNodes = makeUnvisitedArray();
+    // Below makes sure that the first element we will be looping from is our starting node.
+    unvisitedNodes.splice(unvisitedNodes.indexOf(startingNode), 1);
+    unvisitedNodes.splice(0, 0, startingNode);
+    // algo implamented below
+    for(let i = 0; i < unvisitedNodes.length; i++){
+      var edgesOfCurNode = getNeighbouringEdges('#' + unvisitedNodes[i]);
+      for (const [key, value] of Object.entries(edgesOfCurNode)) {
+        console.log(key, ' ',nodesMap[unvisitedNodes[i]], ' ', value, ' ',nodesMap[key], nodesMap[unvisitedNodes[i]] + value < nodesMap[key])
+        if(nodesMap[unvisitedNodes[i]] + value < nodesMap[key]){
+          nodesMap[key] = nodesMap[unvisitedNodes[i]] + value
+        }
+      }
+    }
+    console.log(nodesMap);
   })
 
   $("#clear-canvas").on("click", function(){
@@ -227,25 +242,25 @@ $(window).on('load', function() {
   */
 
   /*
-  This function returns a key value pair for the graph to be traversed. Key will be the name of the node, the value will be its distance to the start.
+  This function returns a key value pair for the graph to be traversed. Key will be the name of the node, the value will be its distance to the start. 
+  Initially at starting node the value will be 0 and the rest of the nodes will be set to infinity. 
   */
   function makeKeyValue(startingNode){
     var looper = cy.json();  
     var nodesMap = {[startingNode]: 0};
     var i;
     for(i in looper.elements.nodes){
-      var elementName = '#' + looper.elements.nodes[i].data.id;
-      var edges = cy.$(elementName).connectedEdges();
-      for(let j = 0; j < edges.length; j++){
-        var sourceNode = edges[j]._private.data.source;
-        if ((!(sourceNode in nodesMap)) && (sourceNode != startingNode)){
-          nodesMap[sourceNode] = Number.MAX_SAFE_INTEGER;
-        }
+      var elementName = looper.elements.nodes[i].data.id;
+      if ((!(elementName in nodesMap)) && (elementName != startingNode)){
+        nodesMap[elementName] = Number.MAX_SAFE_INTEGER;
       }
     }
     return nodesMap;
   }
 
+  /*
+  This functions returns a list of all unvisited nodes in the graph. Used for the setup of the algo it will essentially return a list of all the nodes in the graph.
+  */
   function makeUnvisitedArray(){
     var looper = cy.json();  
     var unvisitedArray = [];
@@ -257,6 +272,9 @@ $(window).on('load', function() {
     return unvisitedArray;
   }
 
+  /*
+  This functions returns a dictionary/hash map of {neighbouringEdge: weight} of the current nodes. 
+  */
   function getNeighbouringEdges(nodeName){
     var connectedMap = {};
     var edges = cy.$(nodeName).connectedEdges();
