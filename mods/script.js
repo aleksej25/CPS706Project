@@ -158,15 +158,25 @@ $(window).on('load', function() {
   });
 
   // global edge to be deleted.
-  var edgeToDelete;
+  var tappedEdge;
   cy.on('tap', 'edge', function(evnt){
-    edgeToDelete = evnt.target._private.data.id;
+    tappedEdge = evnt.target._private.data.id;
+  });
+
+  $("#editEdge").on("click", function() {
+    var editEdge = cy.getElementById(tappedEdge);
+    var newEdgeValue;
+    do{
+      newEdgeValue = prompt("Enter New Edeg Value.");
+    } while( newEdgeValue == "" );
+    console.log('here');
+    editEdge._private.data.weight = parseInt(newEdgeValue);  
+    cy.getElementById(tappedEdge).select();
   });
 
   // now remove most recently clicked edge. Uses variable above to know which one was last clicked.
   $("#removeEdge").on("click", function() {
-    var removeableEdge = cy.getElementById(edgeToDelete);
-    cy.remove(removeableEdge);
+    cy.remove(cy.getElementById(tappedEdge));
   });
 
   $("#dijkstra").on("click", function(){ 
