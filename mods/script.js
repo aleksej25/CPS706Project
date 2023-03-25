@@ -191,13 +191,38 @@ $(window).on('load', function() {
     var nodesMap = makeKeyValue(startingNode);
     var unvisitedNodes = makeUnvisitedArray();
     var visitedNodes = [];
+    var parents = [];
+    var NO_PARENT = -1;
     // Below makes sure that the first element we will be looping from is our starting node.
     unvisitedNodes.splice(unvisitedNodes.indexOf(startingNode), 1);
     unvisitedNodes.splice(0, 0, startingNode);
+    parents[startingNode] = NO_PARENT;
     // algo implamented below
-    unvisitedNodes.forEach(function (item, index) {
-      console.log(item+ ' ',getNeighbouringEdges('#' + item));
-    });
+    for (let i = 1; i < unvisitedNodes.length; i++) {
+      let pre = -1;
+      let min = Number.MAX_SAFE_INTEGER;
+      unvisitedNodes.forEach(function (item, index) {
+        if (!visitedNodes[item] && nodesMap[item] < min) {
+          pre = item;
+          min = nodesMap[item];
+        }         
+      });
+      if (pre==-1) {
+        return;
+      }
+      visitedNodes[pre] = true;
+      let edges = getNeighbouringEdges('#' + pre);
+      for (var e in edges) {
+        if (edges[e] > 0 && ((min + edges[e]) < nodesMap[e])) {
+          parents[e] = pre;
+          nodesMap[e] = min + edges[e];
+        }
+      }
+    }
+      var shortestPath = [endNode];
+      shortestPath = addPath(parents, shortestPath);
+
+      console.log(shortestPath);
   })
 
   $("#bellManFord").on("click", function() {
@@ -289,4 +314,17 @@ $(window).on('load', function() {
     return connectedMap;
   }
 });
+
+ /*
+  This functions builds a list of the shortest path from the starting node to end node
+  */
+
+function addPath(parents, path) {
+  var parent = parents[path[0]];
+  if (parent == -1) {
+    return path;
+  }
+  path.unshift(parent);
+  return addPath(parents, path)
+}
 
