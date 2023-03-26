@@ -145,6 +145,7 @@ $(window).on('load', function() {
   Capitals and spaces matter!
   */
   $("#removeNode").on("click", function() {
+    $("#reset-algo").click();
     var nodeName = prompt('Enter Node Name');
     try{
       // need to get the object associated with this name.
@@ -156,6 +157,19 @@ $(window).on('load', function() {
       alert("Node does not exist.");
     }
   });
+
+
+  $("#reset-algo").on("click", function() {
+    var looper = cy.json();  
+    var i;
+    for(i in looper.elements.nodes){
+      var elementName = '#' + looper.elements.nodes[i].data.id;
+      cy.elements(elementName).style({'background-color': "rgb(135,206,250)"});
+      // "rgb(153,153,153)"
+      cy.elements(elementName).connectedEdges().style({ 'line-color': "rgb(204,204,204)" });
+    }
+  });
+
 
   // global edge to be deleted.
   var tappedEdge;
@@ -180,6 +194,7 @@ $(window).on('load', function() {
   });
 
   $("#dijkstra").on("click", function(){ 
+    $("#reset-algo").click();
     var startingNode;
     var endNode;
     do{
@@ -221,10 +236,11 @@ $(window).on('load', function() {
     }
     var shortestPath = [endNode];
     shortestPath = addPath(parents, shortestPath);
-    console.log(shortestPath);
+    visualize(shortestPath);
   })
 
   $("#bellManFord").on("click", function() {
+    $("#reset-algo").click();
     var startingNode;
     var endNode;
     do{
@@ -254,7 +270,7 @@ $(window).on('load', function() {
     parents[startingNode] = -1;
     var shortestPath = [endNode];
     shortestPath = addPath(parents, shortestPath);
-    console.log(shortestPath);
+    visualize(shortestPath);
   })
 
   $("#clear-canvas").on("click", function(){
@@ -329,6 +345,26 @@ $(window).on('load', function() {
     }
     path.unshift(parent);
     return addPath(parents, path)
+  }
+
+  /*
+  This function is used to visually represent the Bellman-Ford and Dijkstra's Algo
+  */
+
+  function visualize(path){
+    for(let j = 0; j < path.length; j++){
+      var elementName = '#' + path[j];
+      cy.elements(elementName).style({ 'background-color': "rgb(223,30,30)" });
+      if (j + 1 < path.length){
+        var edges = cy.elements(elementName).connectedEdges();
+        for (let i = 0; i < edges.length; i++){
+          var targetNode = edges[i]._private.data.target;
+          if (path[j+1] == targetNode){
+            console.log(edges[i].style({ 'line-color': "rgb(223,30,30)" })); 
+          }
+        }
+      }
+    }
   }
 });
 
