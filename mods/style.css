@@ -1,5 +1,5 @@
 #cy {
-  width: 100%;
+  width: 1080px;
   height: 1080px;
   display: block;
   background-color: #fff;
@@ -53,3 +53,124 @@
   color: #2c5777;
 }
 
+
+/* Styling Done on the home page */
+
+html {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  background-color: #f5f5fa;
+
+  scroll-behavior: smooth;
+  color: #323232;
+}
+
+/* margin/padding: top right bottom left */
+
+.container {
+  padding: 0 20px;
+  margin: 0 auto;
+  width: 70vw;
+}
+
+/* nav */
+
+.nav-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav {
+  padding-left: 10px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.nav-item {
+  display: inline;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 0 30px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #323232;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  color: #666666;
+}
+
+.nav-link:active {
+  color: #919191fe;
+}
+
+/* HOME */
+
+#home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+.home-title {
+  text-align: center;
+  font-size: 72px;
+  margin-bottom: 0px;
+  font-weight: 700;
+}
+
+.home-description {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.home-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.content {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.content-section-1 {
+  flex: 1;
+}
+
+.content-section-2 {
+  flex: 2;
+  padding-left: 30px;
+}
+
+.content-image {
+  width: 100%;
+  border-radius: 15px;
+}
+
+.content-section-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 0px;
+}
+
+.content-section-text {
+  line-height: 30px;
+}
+
+#contact-rightpadding {
+  padding-left: 0px;
+  padding-right: 30px;
+}
