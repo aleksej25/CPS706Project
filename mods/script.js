@@ -169,9 +169,9 @@ $(window).on('load', function() {
     do{
       newEdgeValue = prompt("Enter New Edeg Value.");
     } while( newEdgeValue == "" );
-    console.log('here');
     editEdge._private.data.weight = parseInt(newEdgeValue);  
-    cy.getElementById(tappedEdge).select();
+    $('cy').trigger('click');
+    //cy.getElementById(tappedEdge).select();
   });
 
   // now remove most recently clicked edge. Uses variable above to know which one was last clicked.
@@ -219,10 +219,9 @@ $(window).on('load', function() {
         }
       }
     }
-      var shortestPath = [endNode];
-      shortestPath = addPath(parents, shortestPath);
-
-      console.log(shortestPath);
+    var shortestPath = [endNode];
+    shortestPath = addPath(parents, shortestPath);
+    console.log(shortestPath);
   })
 
   $("#bellManFord").on("click", function() {
@@ -239,24 +238,30 @@ $(window).on('load', function() {
     // Below makes sure that the first element we will be looping from is our starting node.
     unvisitedNodes.splice(unvisitedNodes.indexOf(startingNode), 1);
     unvisitedNodes.splice(0, 0, startingNode);
+    var parents = [];
+    var connectedNodes = [];
     // algo implamented below
     for(let i = 0; i < unvisitedNodes.length; i++){
       var edgesOfCurNode = getNeighbouringEdges('#' + unvisitedNodes[i]);
       for (const [key, value] of Object.entries(edgesOfCurNode)) {
-        console.log(key, ' ',nodesMap[unvisitedNodes[i]], ' ', value, ' ',nodesMap[key], nodesMap[unvisitedNodes[i]] + value < nodesMap[key])
         if(nodesMap[unvisitedNodes[i]] + value < nodesMap[key]){
+          parents[key] = unvisitedNodes[i];
+          //connectedNodes.push([unvisitedNodes[i], key]);
           nodesMap[key] = nodesMap[unvisitedNodes[i]] + value
         }
       }
     }
-    console.log(nodesMap);
+    parents[startingNode] = -1;
+    var shortestPath = [endNode];
+    shortestPath = addPath(parents, shortestPath);
+    console.log(shortestPath);
   })
 
   $("#clear-canvas").on("click", function(){
     var looper = cy.json();  
     var i;
     for(i in looper.elements.nodes){
-      var elementName = looper.elements.nodes[i].data.id;
+      var elementName = '#' + looper.elements.nodes[i].data.id;
       cy.remove(elementName);
     }
   })
@@ -313,18 +318,19 @@ $(window).on('load', function() {
     }
     return connectedMap;
   }
-});
 
- /*
+  /*
   This functions builds a list of the shortest path from the starting node to end node
   */
-
-function addPath(parents, path) {
-  var parent = parents[path[0]];
-  if (parent == -1) {
-    return path;
+  function addPath(parents, path) {
+    var parent = parents[path[0]];
+    if (parent == -1) {
+      return path;
+    }
+    path.unshift(parent);
+    return addPath(parents, path)
   }
-  path.unshift(parent);
-  return addPath(parents, path)
-}
+});
+
+  
 
