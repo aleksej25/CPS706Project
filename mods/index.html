@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-
 <link rel="stylesheet" href="./style.css">
 
 <body>
-
+<!-- Navigation Bar -->
   <div class="container">
-
     <div class="nav-container">
         <ul class="nav">
             <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
@@ -14,7 +12,8 @@
         </ul>
     </div>
 
-
+<!-- Main Title -->
+    
     <div id="home">
       <div>
           <h1 class="home-title">Routing Algorithm Demo</span></h1>
@@ -22,6 +21,8 @@
       </div>
   </div>
 
+ <!-- Dijkstra Algorithm Explanation -->
+  
   <div class="content" id="Dijkstra">
    
     <div class="content-section-2">
@@ -30,11 +31,14 @@
             <p>
               With Dijkstra's Algorithm, you can find the shortest path between nodes in a graph. Particularly, you can find the shortest path from a node (called the "source node") to all other nodes in the graph, producing a shortest-path tree. 
               This algorithm is used in GPS devices to find the shortest path between the current location and the destination. It has broad applications in industry, specially in domains that require modeling networks.
-
             </p>
+          </div>
+     </div>
 
+  <!-- BellMan Ford Explanation -->
 
 <div class="content" id="Bellman Ford">
+  
 <div class="content-section-2">
   <h2 class="content-section-title">Bellman Ford</h2>
   <div class="content-section-text">
@@ -42,19 +46,18 @@
         The Bellman-Ford algorithm emulates the shortest paths from a single source vertex to all other vertices in a weighted digraph. It is slower than Dijkstra's algorithm for the same problem but more versatile because it can handle graphs with some edge weights that are negative numbers.
         Dynamic Programming is used in the Bellman-Ford algorithm. It begins with a starting vertex and calculates the distances between other vertices that a single edge can reach. It then searches for a path with two edges, and so on. 
       </p>
+      </div>
+   </div>
+ </div>
 
-</div>
-
-<br>
 <br>
 
 <h2 class="content-section-title">Routing Algorithms Visualizer</h2>
 
 <br>
-<br>
-<br>
-
-<link rel="stylesheet" href="./style.css">
+    
+<!-- Routing Algorithms Visualizer-->
+    
   <div class="header">
     <button id = "newN" class="button-8">Create New Node</button>
     <button id = "removeNode" class="button-8">Delete Node</button>
