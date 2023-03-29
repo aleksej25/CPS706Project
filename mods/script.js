@@ -357,17 +357,11 @@ $(window).on('load', function() {
   */
   function visualize(path){
     var i = 0;
-    // first colour in all the nodes
+    var j = 1;
+    // colour in all the nodes and edges
     while (i < path.length){
       var elementName = '#' + path[i];
       cy.elements(elementName).style({ 'background-color': "rgb(223,30,30)" });
-      i += 1;
-    }
-    // next colour in all the edges
-    i = 0;
-    var j = 1;
-    while (i < path.length){
-      var elementName = '#' + path[i];
       var edges = cy.elements(elementName).connectedEdges();
       for (let e = 0; e < edges.length; e++){
         var sourceNode = edges[e]._private.data.source;
@@ -380,7 +374,7 @@ $(window).on('load', function() {
       j += 1;
     }
   }
-  
+
   function setStartingLocation(nodeName){
     var x = cy.elements("#"+nodeName).position()['x'];
     var y = cy.elements("#"+nodeName).position()['y'];
