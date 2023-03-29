@@ -96,7 +96,7 @@ $(window).on('load', function() {
   $("#newN").on("click", function(){
     var nodeName;
     do{
-      nodeName = prompt("Enter New Edeg Value.");
+      nodeName = prompt("Enter New Node Name.");
     } while( nodeName == "" );
     if (nodeName == null){
       return;
@@ -108,12 +108,8 @@ $(window).on('load', function() {
       for (let i = 0; i < textArr.length; i++){
         var currentStrLength = textArr[i].length;
         if ((currentStrLength + currentLineLength + 1) <= 16){
-          newNodeName += textArr[i] + " ";
+          newNodeName += textArr[i];
           currentLineLength += currentStrLength;
-        }
-        else{
-          newNodeName += "\n" + textArr[i] + " ";
-          currentLineLength = 0;
         }
       }
       nodeName = newNodeName;
@@ -180,7 +176,7 @@ $(window).on('load', function() {
     var editEdge = cy.getElementById(tappedEdge);
     var newEdgeValue;
     do{
-      newEdgeValue = prompt("Enter New Edeg Value.");
+      newEdgeValue = prompt("Enter New Edge Value.");
     } while( newEdgeValue == "" );
     editEdge._private.data.weight = parseInt(newEdgeValue);  
     $('cy').trigger('click');
