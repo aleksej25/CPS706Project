@@ -11,8 +11,9 @@
 }
 
 .header{
-  background-color: LightSkyBlue;
-  border: 1px solid LightSkyBlue; 
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(255, 255, 255); 
+  text-align: center;
 }
 
 .button-8 {
