@@ -94,15 +94,14 @@ $(window).on('load', function() {
   Anything greater than 16 we want to modify the height to fit the node accordingly. We do this by adding in a \n every 16 characters into the string.
   */
   $("#newN").on("click", function(){
-    var nodeName = prompt('Enter Node Name');
-    if (nodeName.length <= 16){
-      var nodeWidth = 200;
-      var nodeHeight =  45;
+    var nodeName;
+    do{
+      nodeName = prompt("Enter New Edeg Value.");
+    } while( nodeName == "" );
+    if (nodeName == null){
+      return;
     }
     else{
-      var nodeWidth = 200;
-      var roundedNodeLines = Math.round((nodeName.length)/16);
-      var nodeHeight =  30 * roundedNodeLines;
       var newNodeName = "";
       var currentLineLength = 0;
       const textArr = nodeName.split(" ");
@@ -129,8 +128,8 @@ $(window).on('load', function() {
           y: 550
         },
         style: {
-          width: nodeWidth,
-          height: nodeHeight
+          width: 75,
+          height: 75
         }
       });
     }
@@ -145,7 +144,7 @@ $(window).on('load', function() {
   Capitals and spaces matter!
   */
   $("#removeNode").on("click", function() {
-    $("#reset-algo").click();
+    $("#reset-algo").trigger('click');
     var nodeName = prompt('Enter Node Name');
     try{
       // need to get the object associated with this name.
@@ -194,7 +193,7 @@ $(window).on('load', function() {
   });
 
   $("#dijkstra").on("click", function(){ 
-    $("#reset-algo").click();
+    $("#reset-algo").trigger('click');
     var startingNode;
     var endNode;
     do{
@@ -203,6 +202,9 @@ $(window).on('load', function() {
     do{
       endNode = prompt("Enter End Node.");
     } while( endNode == "" );
+    if (startingNode == null || endNode == null){
+      return;
+    }
     var nodesMap = makeKeyValue(startingNode);
     var unvisitedNodes = makeUnvisitedArray();
     var visitedNodes = [];
@@ -240,7 +242,7 @@ $(window).on('load', function() {
   })
 
   $("#bellManFord").on("click", function() {
-    $("#reset-algo").click();
+    $("#reset-algo").trigger('click');
     var startingNode;
     var endNode;
     do{
@@ -249,6 +251,9 @@ $(window).on('load', function() {
     do{
       endNode = prompt("Enter End Node.");
     } while( endNode == "" );
+    if (startingNode == null || endNode == null){
+      return;
+    }
     var nodesMap = makeKeyValue(startingNode);
     var unvisitedNodes = makeUnvisitedArray();
     // Below makes sure that the first element we will be looping from is our starting node.
@@ -262,11 +267,11 @@ $(window).on('load', function() {
       for (const [key, value] of Object.entries(edgesOfCurNode)) {
         if(nodesMap[unvisitedNodes[i]] + value < nodesMap[key]){
           parents[key] = unvisitedNodes[i];
-          //connectedNodes.push([unvisitedNodes[i], key]);
           nodesMap[key] = nodesMap[unvisitedNodes[i]] + value
         }
       }
     }
+    console.log(parents)
     parents[startingNode] = -1;
     var shortestPath = [endNode];
     shortestPath = addPath(parents, shortestPath);
@@ -350,22 +355,38 @@ $(window).on('load', function() {
   /*
   This function is used to visually represent the Bellman-Ford and Dijkstra's Algo
   */
-
   function visualize(path){
-    for(let j = 0; j < path.length; j++){
-      var elementName = '#' + path[j];
+    var i = 0;
+    // first colour in all the nodes
+    while (i < path.length){
+      var elementName = '#' + path[i];
       cy.elements(elementName).style({ 'background-color': "rgb(223,30,30)" });
-      if (j + 1 < path.length){
-        var edges = cy.elements(elementName).connectedEdges();
-        for (let i = 0; i < edges.length; i++){
-          var targetNode = edges[i]._private.data.target;
-          if (path[j+1] == targetNode){
-            console.log(edges[i].style({ 'line-color': "rgb(223,30,30)" })); 
-          }
+      i += 1;
+    }
+    // next colour in all the edges
+    i = 0;
+    var j = 1;
+    while (i < path.length){
+      var elementName = '#' + path[i];
+      var edges = cy.elements(elementName).connectedEdges();
+      for (let e = 0; e < edges.length; e++){
+        var sourceNode = edges[e]._private.data.source;
+        var targetNode = edges[e]._private.data.target;
+        if ((path[i] == sourceNode && path[j] == targetNode) || (path[j] == sourceNode && path[i] == targetNode)){
+          edges[e].style({ 'line-color': "rgb(223,30,30)" }); 
         }
       }
+      i += 1;
+      j += 1;
     }
   }
+  
+  function setStartingLocation(nodeName){
+    var x = cy.elements("#"+nodeName).position()['x'];
+    var y = cy.elements("#"+nodeName).position()['y'];
+    cy.elements("#"+nodeName).style({'background-image': '../resources/packet.jpg'})
+  }
+
 });
 
   

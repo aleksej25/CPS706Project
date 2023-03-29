@@ -5,9 +5,9 @@
         "background-color": "LightSkyBlue",
         "label": "data(id)",
         "text-wrap": "wrap",
-        "shape": "round-rectangle",
-        "width": "200",
-        "height": "45",
+        "shape": "ellipse",
+        "width": "75",
+        "height": "75",
         "text-valign": "center",
         "text-halign": "center",
         "font-size": "19"
