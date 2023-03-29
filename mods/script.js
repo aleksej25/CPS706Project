@@ -352,6 +352,7 @@ $(window).on('load', function() {
   This function is used to visually represent the Bellman-Ford and Dijkstra's Algo
   */
   function visualize(path){
+    let start = Date.now(); 
     var i = 0;
     var j = 1;
     // colour in all the nodes and edges
@@ -364,7 +365,7 @@ $(window).on('load', function() {
         var targetNode = edges[e]._private.data.target;
         if ((path[i] == sourceNode && path[j] == targetNode) || (path[j] == sourceNode && path[i] == targetNode)){
           edges[e].style({ 'line-color': "rgb(223,30,30)" }); 
-        }
+        } 
       }
       i += 1;
       j += 1;
