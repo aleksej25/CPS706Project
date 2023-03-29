@@ -371,13 +371,6 @@ $(window).on('load', function() {
       j += 1;
     }
   }
-
-  function setStartingLocation(nodeName){
-    var x = cy.elements("#"+nodeName).position()['x'];
-    var y = cy.elements("#"+nodeName).position()['y'];
-    cy.elements("#"+nodeName).style({'background-image': '../resources/packet.jpg'})
-  }
-
 });
 
   
