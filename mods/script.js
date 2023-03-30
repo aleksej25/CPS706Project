@@ -93,44 +93,73 @@ $(window).on('load', function() {
   Also size of node is dynamic based on the input text length. If the input text length is less than 16 than we only need one line to represent this text. (16 was found through some trail and error :))
   Anything greater than 16 we want to modify the height to fit the node accordingly. We do this by adding in a \n every 16 characters into the string.
   */
-  $("#newN").on("click", function(){
+  $("#createNewNode").on("click", function(){
+    var nodeType;
+    const validInputs = ["S", "R", "C"];
+    do{
+      nodeType = prompt("Enter Node Type. S = Server, C = Client, R = Router.");
+    } while( nodeType == "" );
     var nodeName;
     do{
       nodeName = prompt("Enter New Node Name.");
     } while( nodeName == "" );
-    if (nodeName == null){
+    if (nodeName == null || nodeType == null){
       return;
     }
-    else{
-      var newNodeName = "";
-      var currentLineLength = 0;
-      const textArr = nodeName.split(" ");
-      for (let i = 0; i < textArr.length; i++){
-        var currentStrLength = textArr[i].length;
-        if ((currentStrLength + currentLineLength + 1) <= 16){
-          newNodeName += textArr[i];
-          currentLineLength += currentStrLength;
-        }
-      }
-      nodeName = newNodeName;
+    if (! validInputs.includes(nodeType)){
+      alert("Invalid Node Type!");
+      return;
     }
-
     try{
-      cy.add({
-        group: 'nodes',
-        data: { id: nodeName},
-        position: { 
-          x: 300,
-          y: 550
-        },
-        style: {
-          width: 75,
-          height: 75
-        }
-      });
+      if (nodeType == 'S'){
+        cy.add({
+          group: 'nodes',
+          data: { id: nodeName},
+          position: { 
+            x: 300,
+            y: 550
+          },
+          style: {
+            width: 150,
+            height: 150,
+            "background-image": "../resources/server.png"
+          }
+        });
+      }
+      else if (nodeType == 'C'){
+        cy.add({
+          group: 'nodes',
+          data: { id: nodeName},
+          position: { 
+            x: 300,
+            y: 550
+          },
+          style: {
+            width: 160,
+            height: 160,
+            "background-image": "../resources/computer.png",
+            color: "Black"
+          }
+        });
+      }
+      else{
+        cy.add({
+          group: 'nodes',
+          data: { id: nodeName},
+          position: { 
+            x: 300,
+            y: 550
+          },
+          style: {
+            width: 150,
+            height: 150,
+          }
+        });
+      }
+      
     }
     catch(err){
-      alert("Node with this name already exists.");
+      alert("Node with this name already exists!");
     }
   });
 
@@ -159,8 +188,7 @@ $(window).on('load', function() {
     var i;
     for(i in looper.elements.nodes){
       var elementName = '#' + looper.elements.nodes[i].data.id;
-      cy.elements(elementName).style({'background-color': "rgb(135,206,250)"});
-      // "rgb(153,153,153)"
+      cy.elements(elementName).style({'background-color': "White"});
       cy.elements(elementName).connectedEdges().style({ 'line-color': "rgb(204,204,204)" });
     }
   });
@@ -180,7 +208,6 @@ $(window).on('load', function() {
     } while( newEdgeValue == "" );
     editEdge._private.data.weight = parseInt(newEdgeValue);  
     $('cy').trigger('click');
-    //cy.getElementById(tappedEdge).select();
   });
 
   // now remove most recently clicked edge. Uses variable above to know which one was last clicked.
@@ -359,6 +386,7 @@ $(window).on('load', function() {
     while (i < path.length){
       var elementName = '#' + path[i];
       cy.elements(elementName).style({ 'background-color': "rgb(223,30,30)" });
+      console.log(cy.elements(elementName).style());
       var edges = cy.elements(elementName).connectedEdges();
       for (let e = 0; e < edges.length; e++){
         var sourceNode = edges[e]._private.data.source;
