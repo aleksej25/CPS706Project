@@ -184,6 +184,7 @@ $(window).on('load', function() {
 
 
   $("#reset-algo").on("click", function() {
+    
     var looper = cy.json();  
     var i;
     for(i in looper.elements.nodes){
@@ -199,7 +200,7 @@ $(window).on('load', function() {
         highlightEdges(counter);
         resolve();
     }, 500))
-}
+  }
 
   function highlightEdges(counter) {
     var edges = getEdges();
@@ -233,7 +234,6 @@ $(window).on('load', function() {
       newEdgeValue = prompt("You've chosen edge " + tappedEdge + ". Enter New Edge Value:");
     } while( newEdgeValue == "" );
     editEdge._private.data.weight = parseInt(newEdgeValue);  
-    $('cy').trigger('click'); // what's the point of this?
     alert("Edge " + tappedEdge + " will be updated.")
     tappedEdge = undefined;
   });
@@ -272,7 +272,6 @@ $(window).on('load', function() {
     var visitedNodes = [];
     var parents = [];
     var NO_PARENT = -1;
-    console.log(nodesMap);
     // Below makes sure that the first element we will be looping from is our starting node.
     unvisitedNodes.splice(unvisitedNodes.indexOf(startingNode), 1);
     unvisitedNodes.splice(0, 0, startingNode);
@@ -323,8 +322,7 @@ $(window).on('load', function() {
     unvisitedNodes.splice(unvisitedNodes.indexOf(startingNode), 1);
     unvisitedNodes.splice(0, 0, startingNode);
     var parents = [];
-    var connectedNodes = [];
-    // algo implamented below
+    document.getElementById("nextButton").style.visibility = "visible";
     for(let i = 0; i < unvisitedNodes.length; i++){
       var edgesOfCurNode = getNeighbouringEdges('#' + unvisitedNodes[i]);
       for (const [key, value] of Object.entries(edgesOfCurNode)) {
@@ -334,7 +332,6 @@ $(window).on('load', function() {
         }
       }
     }
-    console.log(parents)
     parents[startingNode] = -1;
     var shortestPath = [endNode];
     shortestPath = addPath(parents, shortestPath);
@@ -426,7 +423,6 @@ $(window).on('load', function() {
     while (i < path.length){
       var elementName = '#' + path[i];
       cy.elements(elementName).style({ 'background-color': "rgb(223,30,30)" });
-      console.log(cy.elements(elementName).style());
       var edges = cy.elements(elementName).connectedEdges();
       for (let e = 0; e < edges.length; e++){
         var sourceNode = edges[e]._private.data.source;
