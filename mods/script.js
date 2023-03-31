@@ -234,7 +234,7 @@ $(window).on('load', function() {
     } while( newEdgeValue == "" );
     editEdge._private.data.weight = parseInt(newEdgeValue);  
     $('cy').trigger('click'); // what's the point of this?
-    alert("Edge " + tappedEdge + " has been updated.")
+    alert("Edge " + tappedEdge + " will be updated.")
     tappedEdge = undefined;
   });
 
@@ -249,7 +249,7 @@ $(window).on('load', function() {
       highlightEdges(1);
     }
     cy.remove(cy.getElementById(tappedEdge));
-    alert("Edge " + tappedEdge + " has been deleted.");
+    alert("Edge " + tappedEdge + " will be deleted.");
     tappedEdge = undefined;
   });
   
@@ -453,7 +453,6 @@ $(window).on('load', function() {
     for(i in looper.elements.nodes){
       nodes.push(looper.elements.nodes[i].data.id);
     }
-    console.log(nodes);
     i = 0;
     while (i < nodes.length){
       var elementName = '#' + nodes[i];
