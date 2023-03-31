@@ -165,28 +165,66 @@ $(window).on('load', function() {
     }
   });
 
+  // Delay function to highlight edges on and off
+  function delay(counter) {
+    return new Promise((resolve) => setTimeout(function () {
+        highlightEdges(counter);
+        resolve();
+    }, 500))
+}
 
-  // global edge to be deleted.
+  function highlightEdges(counter) {
+    var edges = getEdges();
+    for (let e = 0; e < edges.length; e++){
+      if (counter % 2 == 0) {
+        edges[e].style({ 'line-color': "rgb(223,30,30)" });  
+      }
+      else {
+        edges[e].style({ 'line-color': "rgb(204,204,204)" });  
+      }
+    }   
+  }
+
+  // global edge to be updated.
   var tappedEdge;
   cy.on('tap', 'edge', function(evnt){
     tappedEdge = evnt.target._private.data.id;
   });
 
-  $("#editEdge").on("click", function() {
+  $("#editEdge").on("click", async function() {
+    alert("Please select an edge");
+    var counter = 0;
+    while(tappedEdge == undefined) {
+     await delay(counter);
+     counter += 1;
+    }
+    if (tappedEdge != undefined) {  highlightEdges(1);    }
     var editEdge = cy.getElementById(tappedEdge);
     var newEdgeValue;
     do{
-      newEdgeValue = prompt("Enter New Edge Value.");
+      newEdgeValue = prompt("You've chosen edge " + tappedEdge + ". Enter New Edge Value:");
     } while( newEdgeValue == "" );
     editEdge._private.data.weight = parseInt(newEdgeValue);  
-    $('cy').trigger('click');
-    //cy.getElementById(tappedEdge).select();
+    $('cy').trigger('click'); // what's the point of this?
+    alert("Edge " + tappedEdge + " has been updated.")
+    tappedEdge = undefined;
   });
 
-  // now remove most recently clicked edge. Uses variable above to know which one was last clicked.
-  $("#removeEdge").on("click", function() {
+  $("#removeEdge").on("click", async function() {
+    alert("Please select an edge to delete");
+    var counter = 0;
+    while(tappedEdge == undefined) {
+     await delay(counter);
+     counter += 1;
+    }
+    if (tappedEdge != undefined) {
+      highlightEdges(1);
+    }
     cy.remove(cy.getElementById(tappedEdge));
+    alert("Edge " + tappedEdge + " has been deleted.");
+    tappedEdge = undefined;
   });
+  
 
   $("#dijkstra").on("click", function(){ 
     $("#reset-algo").trigger('click');
@@ -206,6 +244,7 @@ $(window).on('load', function() {
     var visitedNodes = [];
     var parents = [];
     var NO_PARENT = -1;
+    console.log(nodesMap);
     // Below makes sure that the first element we will be looping from is our starting node.
     unvisitedNodes.splice(unvisitedNodes.indexOf(startingNode), 1);
     unvisitedNodes.splice(0, 0, startingNode);
@@ -371,7 +410,34 @@ $(window).on('load', function() {
       j += 1;
     }
   }
+
+
+  /*
+  This function is used to return a list of all the current edges
+  */
+  function getEdges() {
+    var nodes = [];
+    var looper = cy.json();  
+    var i;
+    var edges;
+    var edgesList = [];
+    for(i in looper.elements.nodes){
+      nodes.push(looper.elements.nodes[i].data.id);
+    }
+    console.log(nodes);
+    i = 0;
+    while (i < nodes.length){
+      var elementName = '#' + nodes[i];
+      edges = cy.elements(elementName).connectedEdges();
+      for (let e = 0; e < edges.length; e++){
+        edgesList.push(edges[e]);
+      }
+      i += 1;
+    }
+    return edgesList;
+  }
 });
+
 
   
 
