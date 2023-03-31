@@ -2,15 +2,18 @@
     {
       "selector": "node",
       "style": {
-        "background-color": "LightSkyBlue",
+        "background-color": "White",
         "label": "data(id)",
         "text-wrap": "wrap",
         "shape": "ellipse",
-        "width": "75",
-        "height": "75",
+        "width": "150",
+        "height": "150",
         "text-valign": "center",
         "text-halign": "center",
-        "font-size": "19"
+        "font-size": "35",
+        "background-image": "../resources/router.png",
+        "color": "LightSkyBlue",
+        "font-weight": "bold"
       }
     },
     {
