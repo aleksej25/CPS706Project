@@ -342,7 +342,7 @@ $(window).on('load', function() {
         if(nodesMap[unvisitedNodes[i]] + value < nodesMap[key]){
           parents[key] = unvisitedNodes[i];
           nodesMap[key] = nodesMap[unvisitedNodes[i]] + value;
-          document.getElementById('routingTable').innerHTML += '<li>' + key + ': ' + nodesMap[key] + '. The parent of '+ key + ' is ' + parents[key] +'</li>';
+          document.getElementById('routingTable').innerHTML += '<li>' + "The cost to get to " + key + ' is ' + nodesMap[key] + '. The parent of '+ key + ' is ' + parents[key] +'</li>';
           await tempPause(2000);
         }
       }
@@ -434,11 +434,12 @@ $(window).on('load', function() {
   /*
   This function is used to visually represent the Bellman-Ford and Dijkstra's Algo
   */
-  function visualize(path){
+  async function visualize(path){
     let start = Date.now(); 
     var i = 0;
     var j = 1;
     // colour in all the nodes and edges
+    // Outer loops colours the node inner loops colours the edge
     while (i < path.length){
       var elementName = '#' + path[i];
       cy.elements(elementName).style({ 'background-color': "rgb(223,30,30)" });
@@ -447,6 +448,7 @@ $(window).on('load', function() {
         var sourceNode = edges[e]._private.data.source;
         var targetNode = edges[e]._private.data.target;
         if ((path[i] == sourceNode && path[j] == targetNode) || (path[j] == sourceNode && path[i] == targetNode)){
+          await tempPause(1500);
           edges[e].style({ 'line-color': "rgb(223,30,30)" }); 
         } 
       }
