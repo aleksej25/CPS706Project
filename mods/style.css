@@ -5,6 +5,10 @@
   background-color: #fff;
 }
 
+.p{
+  visibility: hidden;
+}
+
 .a{
   font-family: "Helvetica";
 }

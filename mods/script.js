@@ -182,10 +182,12 @@ $(window).on('load', function() {
     }
   });
 
-
+  /*
+  Function used to reset the drawing of the algorithm on screen.
+  */
   $("#reset-algo").on("click", function() {
-    
     var looper = cy.json();  
+    document.getElementById('routingTable').innerHTML = "";
     var i;
     for(i in looper.elements.nodes){
       var elementName = '#' + looper.elements.nodes[i].data.id;
@@ -220,6 +222,10 @@ $(window).on('load', function() {
     tappedEdge = evnt.target._private.data.id;
   });
 
+
+  /*
+  Two functions used below are for editing edges of the algorithm.
+  */
   $("#editEdge").on("click", async function() {
     alert("Please select an edge");
     var counter = 0;
@@ -252,6 +258,13 @@ $(window).on('load', function() {
     alert("Edge " + tappedEdge + " will be deleted.");
     tappedEdge = undefined;
   });
+  
+  /*
+  This is a helper function used to pause the for loop execution to visualize the nodes map table.
+  */
+  function tempPause(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
   
 
   $("#dijkstra").on("click", function(){ 
@@ -303,7 +316,7 @@ $(window).on('load', function() {
     visualize(shortestPath);
   })
 
-  $("#bellManFord").on("click", function() {
+  $("#bellManFord").on("click", async function() {
     $("#reset-algo").trigger('click');
     var startingNode;
     var endNode;
@@ -321,23 +334,29 @@ $(window).on('load', function() {
     // Below makes sure that the first element we will be looping from is our starting node.
     unvisitedNodes.splice(unvisitedNodes.indexOf(startingNode), 1);
     unvisitedNodes.splice(0, 0, startingNode);
+    document.getElementById("routingTable").style.visibility = "visible";
     var parents = [];
-    document.getElementById("nextButton").style.visibility = "visible";
     for(let i = 0; i < unvisitedNodes.length; i++){
       var edgesOfCurNode = getNeighbouringEdges('#' + unvisitedNodes[i]);
       for (const [key, value] of Object.entries(edgesOfCurNode)) {
         if(nodesMap[unvisitedNodes[i]] + value < nodesMap[key]){
           parents[key] = unvisitedNodes[i];
-          nodesMap[key] = nodesMap[unvisitedNodes[i]] + value
+          nodesMap[key] = nodesMap[unvisitedNodes[i]] + value;
+          document.getElementById('routingTable').innerHTML += '<li>' + key + ': ' + nodesMap[key] + '. The parent of '+ key + ' is ' + parents[key] +'</li>';
+          await tempPause(2000);
         }
       }
     }
+
     parents[startingNode] = -1;
     var shortestPath = [endNode];
     shortestPath = addPath(parents, shortestPath);
     visualize(shortestPath);
   })
 
+ /*
+  Function used to clear the entire graph.
+  */
   $("#clear-canvas").on("click", function(){
     var looper = cy.json();  
     var i;
