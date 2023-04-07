@@ -267,7 +267,7 @@ $(window).on('load', function() {
   }
   
 
-  $("#dijkstra").on("click", function(){ 
+  $("#dijkstra").on("click", async function(){ 
     $("#reset-algo").trigger('click');
     var startingNode;
     var endNode;
@@ -290,6 +290,7 @@ $(window).on('load', function() {
     unvisitedNodes.splice(0, 0, startingNode);
     parents[startingNode] = NO_PARENT;
     // algo implamented below
+    document.getElementById("routingTable").style.visibility = "visible";
     for (let i = 1; i < unvisitedNodes.length; i++) {
       let pre = -1;
       let min = Number.MAX_SAFE_INTEGER;
@@ -308,7 +309,11 @@ $(window).on('load', function() {
         if (edges[e] > 0 && ((min + edges[e]) < nodesMap[e])) {
           parents[e] = pre;
           nodesMap[e] = min + edges[e];
+          document.getElementById('routingTable').innerHTML += '<li>' + "From &nbsp &nbsp &nbsp to &nbsp &nbsp &nbsp Cost" + '</li>';
+          document.getElementById('routingTable').innerHTML +=  "&nbsp &nbsp" + parents[e] +"&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp" + e + '&nbsp &nbsp  &nbsp &nbsp &nbsp  ' + nodesMap[e];
+          await tempPause(1000);
         }
+        
       }
     }
     var shortestPath = [endNode];
@@ -342,8 +347,9 @@ $(window).on('load', function() {
         if(nodesMap[unvisitedNodes[i]] + value < nodesMap[key]){
           parents[key] = unvisitedNodes[i];
           nodesMap[key] = nodesMap[unvisitedNodes[i]] + value;
-          document.getElementById('routingTable').innerHTML += '<li>' + "The cost to get to " + key + ' is ' + nodesMap[key] + '. The parent of '+ key + ' is ' + parents[key] +'</li>';
-          await tempPause(2000);
+          document.getElementById('routingTable').innerHTML += '<li>' + "From &nbsp &nbsp &nbsp to &nbsp &nbsp &nbsp Cost" + '</li>';
+          document.getElementById('routingTable').innerHTML +=  "&nbsp &nbsp" + parents[key] +"&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp" + key + '&nbsp &nbsp  &nbsp &nbsp &nbsp  ' + nodesMap[key];
+          await tempPause(1000);
         }
       }
     }
