@@ -204,6 +204,7 @@ $(window).on('load', function() {
     }, 500))
   }
 
+  // Helper function used to highlight edges
   function highlightEdges(counter) {
     var edges = getEdges();
     for (let e = 0; e < edges.length; e++){
@@ -224,7 +225,7 @@ $(window).on('load', function() {
 
 
   /*
-  Two functions used below are for editing edges of the algorithm.
+  Two functions used below are for editing edges of the graph.
   */
   $("#editEdge").on("click", async function() {
     alert("Please select an edge");
@@ -282,6 +283,10 @@ $(window).on('load', function() {
     }
     var nodesMap = makeKeyValue(startingNode);
     var unvisitedNodes = makeUnvisitedArray();
+    if ((!(unvisitedNodes.includes(startingNode))) || (!(unvisitedNodes.includes(endNode)))){
+      alert("Invalid Nodes!");
+      return;
+    }
     var visitedNodes = [];
     var parents = [];
     var NO_PARENT = -1;
@@ -336,6 +341,10 @@ $(window).on('load', function() {
     }
     var nodesMap = makeKeyValue(startingNode);
     var unvisitedNodes = makeUnvisitedArray();
+    if ((!(unvisitedNodes.includes(startingNode))) || (!(unvisitedNodes.includes(endNode)))){
+      alert("Invalid Nodes!");
+      return;
+    }
     // Below makes sure that the first element we will be looping from is our starting node.
     unvisitedNodes.splice(unvisitedNodes.indexOf(startingNode), 1);
     unvisitedNodes.splice(0, 0, startingNode);
@@ -441,9 +450,11 @@ $(window).on('load', function() {
   This function is used to visually represent the Bellman-Ford and Dijkstra's Algo
   */
   async function visualize(path){
-    let start = Date.now(); 
     var i = 0;
     var j = 1;
+    var cost = 0;
+    let start = path[0];
+    let end = path[path.length - 1];
     // colour in all the nodes and edges
     // Outer loops colours the node inner loops colours the edge
     while (i < path.length){
@@ -455,12 +466,14 @@ $(window).on('load', function() {
         var targetNode = edges[e]._private.data.target;
         if ((path[i] == sourceNode && path[j] == targetNode) || (path[j] == sourceNode && path[i] == targetNode)){
           await tempPause(1500);
+          cost += edges[e]._private.data.weight;
           edges[e].style({ 'line-color': "rgb(223,30,30)" }); 
         } 
       }
       i += 1;
       j += 1;
     }
+    document.getElementById('routingTable').innerHTML += '<li>' + "The total cost to go from " + start + " to " + end + " is " + cost+ '</li>';
   }
 
 
