@@ -373,6 +373,7 @@ $(window).on('load', function() {
   Function used to clear the entire graph.
   */
   $("#clear-canvas").on("click", function(){
+    $("#reset-algo").trigger('click');
     var looper = cy.json();  
     var i;
     for(i in looper.elements.nodes){
